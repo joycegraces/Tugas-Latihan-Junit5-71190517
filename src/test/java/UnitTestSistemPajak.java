@@ -1,0 +1,79 @@
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+public class UnitTestSistemPajak {
+    static SistemPajak sistemPajak;
+
+    @BeforeAll
+    public static void init(){
+        sistemPajak = new SistemPajak();
+    }
+    @AfterAll
+    static void destroy(){
+        sistemPajak = null;
+    }
+
+    //EC, nilai ec test
+    private static Stream<Arguments> vECTestParameters() {
+        return Stream.of(
+                Arguments.of(0, 3800000),
+                Arguments.of(10, 12000000),
+                Arguments.of(22, 35000000),
+                Arguments.of(40f, 98999999999f),
+                Arguments.of(-1, -3000000),
+                Arguments.of(-1, 10000000000000f)
+        );
+        }
+        //Method yang digunakan untuk uji EC berdasarkan class skenario
+    @ParameterizedTest
+    @MethodSource("vECTestParameters")
+    public void sistemECPajakTest(double expected, double salary){
+        assertNotNull(sistemPajak);
+        assertEquals(expected, sistemPajak.getPajak(salary));
+    }
+    private static Stream<Arguments> BVAParameters(){
+        return Stream.of(
+                //BVA 1 & 2
+
+                Arguments.of(true, 3999999),
+                Arguments.of(true, 4000000),
+                Arguments.of(false, 4000001)
+
+                //BVA 2 & 3
+                /*
+                Arguments.of(true, 14999999),
+                Arguments.of(true, 15000000),
+                Arguments.of(false, 15000001)
+                */
+
+                /*
+                Arguments.of(true, 39999999),
+                Arguments.of(true, 40000000),
+                Arguments.of(false, 40000001)
+                 */
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("BVAParameters")
+    public void BVASistemPajakTest(boolean expected, double salary){
+        assertNotNull(sistemPajak);
+        //BVA untuk EC 1 dan 2
+        assertEquals(expected, sistemPajak.getPajak(salary)==0);
+
+        //BVA untuk test 2 dan 3
+        //assertEquals(expected, sistemPajak.getPajak(salary)==10);
+
+        //BVA untuk test 3 dan 4
+        //assertEquals(expected, sistemPajak.getPajak(salary)==22);
+    }
+
+
+}
