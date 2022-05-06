@@ -29,7 +29,7 @@ public class UnitTestSistemPajak {
                 Arguments.of(22, 35000000),
                 Arguments.of(40f, 98999999999f),
                 Arguments.of(-1, -3000000),
-                Arguments.of(-1, 10000000000000f)
+                Arguments.of(-1, 10000000000000d)
         );
         }
         //Method yang digunakan untuk uji EC berdasarkan class skenario
@@ -53,12 +53,18 @@ public class UnitTestSistemPajak {
                 Arguments.of(true, 15000000),
                 Arguments.of(false, 15000001)
                 */
-
+                //BVA 3 & 4
                 /*
                 Arguments.of(true, 39999999),
                 Arguments.of(true, 40000000),
                 Arguments.of(false, 40000001)
                  */
+                //BVA 4
+                /*
+                Arguments.of(true, 999999999998f),
+                Arguments.of(true, 999999999999f),
+                Arguments.of(false, 1000000000000d)
+                   */
         );
     }
     @ParameterizedTest
@@ -73,6 +79,9 @@ public class UnitTestSistemPajak {
 
         //BVA untuk test 3 dan 4
         //assertEquals(expected, sistemPajak.getPajak(salary)==22);
+
+        //BVA untuk test 4
+        //assertEquals(expected, sistemPajak.getPajak(salary)==40f);
     }
 
 
